@@ -1,5 +1,5 @@
 // Update with your config settings.
-
+// updated knex for PG
 module.exports = {
   development: {
     client: "sqlite3",
