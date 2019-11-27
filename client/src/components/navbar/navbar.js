@@ -26,7 +26,7 @@ export default class TradeNav extends Component {
           Home
         </Menu.Item>
         <div className="boxTitle">
-          <h2 className="navHead">QuietLight</h2>
+          <h2 className="navHead">BrightLight</h2>
         </div>
 
         <Menu.Menu position="right">

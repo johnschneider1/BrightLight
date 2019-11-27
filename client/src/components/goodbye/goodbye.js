@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "semantic-ui-react";
+import "./goodbye.css";
 
 const items = [
   {
@@ -11,13 +12,13 @@ const items = [
 
 function Goodbye() {
   return (
-    <div>
+    <div className="byebox">
       <img
         className="byeImage"
-        src="https://i.imgur.com/y7D9swV.jpg"
+        src="https://i.imgur.com/IjSQ94T.jpg"
         alt="goodbye"
-        height={1000}
-        width={1000}
+        // width={500}
+        // height={500}
       />
       {/* <Card.Group items={items}></Card.Group> */}
     </div>

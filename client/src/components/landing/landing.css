@@ -44,10 +44,12 @@ img {
   width: 100% !important;
 }
 
-h1 {
+/* h1 {
   border: black dashed 5px;
+  margin-top: 19px;
   text-align: center;
-}
+  font-size: 35px;
+} */
 
 .photoBox {
   display: flex;

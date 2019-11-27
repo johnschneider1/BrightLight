@@ -1,24 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
-// import {
-//   Container,
-//   Header,
-//   Icon,
-//   Form,
-//   Input,
-//   Button
-// } from "semantic-ui-react";
-// import Navbar from "../navbar/navbar";
-import "./login.css";
-// import "semantic-ui-css/semantic.min.css";
-import { Button, Segment } from "semantic-ui-react";
+import "./register.css";
+import { Button } from "semantic-ui-react";
 
 const initialinfo = {
   username: "",
   password: ""
 };
 
-const Login = props => {
+const Register = props => {
   const [info, setinfo] = useState(initialinfo);
 
   const handleChange = e =>
@@ -27,12 +17,12 @@ const Login = props => {
   const handleSubmit = e => {
     e.preventDefault();
     axios
-      .post("https://quietlight-db.herokuapp.com/api/auth/login", info)
+      .post("https://quietlight-db.herokuapp.com/api/auth/register", info)
       .then(res => {
         console.log(res);
         setinfo(initialinfo);
         localStorage.setItem("token", res.data.token);
-        props.history.push("/volatility");
+        props.history.push("/login");
       })
       .catch(err => {
         console.log(err.response);
@@ -40,55 +30,17 @@ const Login = props => {
   };
 
   return (
-    // <div className="loginBox">
-    //   {/* <Navbar /> */}
-    //   <div className="innerBox">
-    //     <Container>
-    //       <Header as="h1" icon textAlign="center">
-    //         <Icon name="sign-in" color="yellow" />
-    //         {/* <Header.Content>Sign In</Header.Content> */}
-    //       </Header>
-    //       <Form onSubmit={handleSubmit}>
-    //         <Form.Field className="form-field">
-    //           <Input
-    //             size="large"
-    //             className="input-field"
-    //             htmlFor="username"
-    //             placeholder="Username"
-    //             type="username"
-    //             id="username"
-    //             value={info.password}
-    //             onChange={handleChange}
-    //           />
-    //         </Form.Field>
-    //         <Form.Field className="form-field">
-    //           <Input
-    //             size="large"
-    //             className="input-field"
-    //             htmlFor="password"
-    //             placeholder="Password"
-    //             type="password"
-    //             id="password"
-    //             value={info.password}
-    //             onChange={handleChange}
-    //           />
-    //         </Form.Field>
-    //         <Button color="yellow">Login</Button>
-    //       </Form>
-    //     </Container>
-    //   </div>
-    // </div>
-
     <div className="login-box">
       <div className="benSolt">
         <div className="logoHolder">
           <div className="logo">
-            {/* <img
-              src="https://i.imgur.com/oRlwYUo.jpg"
+            {/* <h1 className="regbox">Please Sign Up</h1> */}
+            <img
+              src="https://i.imgur.com/rBjfKlr.png"
               alt="icon"
               height={250}
               width={250}
-            /> */}
+            />
           </div>
         </div>
         {/* <h1>
@@ -127,8 +79,8 @@ const Login = props => {
         /> */}
         </form>
         <div className="button-box">
-          <Button onClick={handleSubmit} inverted size="large" color="red">
-            Login
+          <Button onClick={handleSubmit} inverted size="large" color="yellow">
+            Register
           </Button>
           {/* 
           {initialinfo !== null ? (
@@ -144,4 +96,4 @@ const Login = props => {
   );
 };
 
-export default Login;
+export default Register;

@@ -8,29 +8,12 @@ import { Line } from "react-chartjs-2";
 //   labels: [
 //     "January 2003",
 //     "July 2003",
-//     `${rapid}`,
-//     "March",
+//        "March",
 //     "April",
 //     "May",
 //     "June",
 //     "July",
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`,
-//     `${rapid}`
+
 //   ],
 //   datasets: [
 //     {
@@ -52,7 +35,7 @@ import { Line } from "react-chartjs-2";
 //       pointHoverBorderWidth: 2,
 //       pointRadius: 1,
 //       pointHitRadius: 10,
-//       data: [55, 59, 80, 81, 56, 55, 40, `${nummy}`]
+//       data: [55, 59, 80, 81, 56, 55, 40]
 //     }
 //   ]
 // };
