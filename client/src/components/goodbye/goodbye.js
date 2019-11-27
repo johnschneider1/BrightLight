@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card } from "semantic-ui-react";
 import "./goodbye.css";
+import { Redirect } from "react-router-dom";
 
 const items = [
   {
@@ -11,8 +12,21 @@ const items = [
 ];
 
 function Goodbye() {
+  // const logoutNow = () => {
+  //   {
+  //     localStorage.removeItem("token");
+  //   }
+  //   <Redirect to="/landing" />;
+  // };
+
+  // useEffect(() => {
+  //   logoutNow();
+  // }, []);
+
   return (
     <div className="byebox">
+      {localStorage.removeItem("token")}
+      <Redirect to="/landing" />
       <img
         className="byeImage"
         src="https://i.imgur.com/IjSQ94T.jpg"
