@@ -6,23 +6,12 @@ import { Image } from "semantic-ui-react";
 import ScrollText from "../starScroll/starwarsText";
 
 const Landing = () => {
-  const [logged, setlogged] = useState(0);
-
-  const fetchToken = () => {
-    localStorage.getItem("token");
-    setlogged(1);
-  };
-
-  useEffect(() => {
-    fetchToken();
-  }, []);
-
   return (
     <div className="land-box">
       <h1>ENTER HERE</h1>
 
       <div className="photoBox">
-        {logged === 1 ? (
+        {localStorage.getItem("token") === null ? (
           <Link to="/register">
             <Image
               style={{
