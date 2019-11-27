@@ -1,0 +1,25 @@
+h2 {
+  display: flex;
+  align-items: center;
+}
+
+.ui.menu {
+  text-align: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-around !important;
+  /* border: 5px solid black !important; */
+}
+
+.navHead {
+  margin: 0 auto !important;
+  /* border: 5px solid black !important; */
+  text-align: center;
+}
+
+.boxTitle {
+  /* border: 5px solid red; */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

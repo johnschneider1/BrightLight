@@ -1,0 +1,13 @@
+.vol-form {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  border: red 10px;
+  border-bottom: red 10px;
+  /* background-color: #7395ae; */
+  background-color: #7395ae;
+  height: 100vh !important;
+  width: 100% !important;
+}

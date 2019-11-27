@@ -7,11 +7,11 @@ import ScrollText from "../starScroll/starwarsText";
 
 const Landing = () => {
   return (
-    <div className="container">
-      <div className="scrollbox">{/* <ScrollText /> */}</div>
-      <Link to="/login">
-        <div className="photoBox">
-          {/* <img src="lightbuldQL.jpg" alt="light picture"></img> */}
+    <div className="land-box">
+      <h1>ENTER HERE</h1>
+
+      <div className="photoBox">
+        <Link to="/login">
           <Image
             style={{
               position: "relative"
@@ -20,8 +20,8 @@ const Landing = () => {
             size="large"
             src="https://i.imgur.com/x69w8PW.jpg"
           />
-        </div>
-      </Link>
+        </Link>
+      </div>
     </div>
   );
 };

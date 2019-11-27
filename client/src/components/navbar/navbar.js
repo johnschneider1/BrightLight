@@ -14,7 +14,7 @@ export default class TradeNav extends Component {
     const { activeItem } = this.state;
 
     return (
-      <Menu color="yellow">
+      <Menu color="yellow" className="navBox center aligned">
         <Icon name="lightbulb" color="yellow" size="huge" />
         <Menu.Item
           name="home"
@@ -25,10 +25,8 @@ export default class TradeNav extends Component {
         >
           Home
         </Menu.Item>
-        <div>
-          <Header as="h2" textAlign="center" color="yellow">
-            QuietLight
-          </Header>
+        <div className="boxTitle">
+          <h2 className="navHead">QuietLight</h2>
         </div>
 
         <Menu.Menu position="right">

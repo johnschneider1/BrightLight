@@ -12,7 +12,14 @@ const items = [
 function Goodbye() {
   return (
     <div>
-      <Card.Group items={items}></Card.Group>
+      <img
+        className="byeImage"
+        src="https://i.imgur.com/y7D9swV.jpg"
+        alt="goodbye"
+        height={1000}
+        width={1000}
+      />
+      {/* <Card.Group items={items}></Card.Group> */}
     </div>
   );
 }
