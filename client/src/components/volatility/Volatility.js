@@ -21,10 +21,24 @@ const Volatility = () => {
     setCrypto("cme");
   }
   console.log("test crypto:", crypto);
-  // api state
 
-  // if (!data) {
-  //   const data = {
+  // if (typeof Object.keys(vol) !== "undefined" && Object.keys(vol).length > 0) {
+  //   setVol("");
+  // }
+  // const blankSpace = {
+  //   labels: [
+  //     "January 2003",
+  //     "July 2003",
+  //     "March",
+  //     "April",
+  //     "May",
+  //     "June",
+  //     "July"
+  //   ]
+  // };
+
+  // if (vol === undefined || null) {
+  //   let newAxis = {
   //     labels: [
   //       "January 2003",
   //       "July 2003",
@@ -60,50 +74,12 @@ const Volatility = () => {
   //   };
   // }
 
-  // function addData(chart, label, data) {
-  //   chart.data.labels.push(label);
-  //   chart.data.datasets.forEach(dataset => {
-  //     dataset.data.push(data);
-  //   });
-  //   chart.update();
-  // }
-
-  // const rapid = vol;
-  // console.log("vartest:", rapid);
-  // const nummy = 112;
+  const newAxis = Object.keys(vol);
+  const otherAxis = Object.values(vol).map(ele => ele.SMA);
 
   const data = {
-    /*
-    labels: [
-      `${rapid}`,
-      "January 2003",
-      "July 2003",
-      `${rapid}`,
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`,
-      `${rapid}`
-    ],
-    */
-    labels: Object.keys(vol),
+    // labels: Object.keys(vol),
+    labels: newAxis,
     datasets: [
       {
         label: "Price over Time",
@@ -124,8 +100,8 @@ const Volatility = () => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        //data: [55, 59, 80, 81, 56, 55, 40, `${nummy}`]
-        data: Object.values(vol).map(ele => ele.SMA)
+        // data: Object.values(vol).map(ele => ele.SMA)
+        data: otherAxis
       }
     ]
   };

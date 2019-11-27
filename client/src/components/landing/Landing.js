@@ -22,8 +22,8 @@ const Landing = () => {
       <h1>ENTER HERE</h1>
 
       <div className="photoBox">
-        {logged !== 0 ? (
-          <Link to="/volatility">
+        {logged === 1 ? (
+          <Link to="/register">
             <Image
               style={{
                 position: "relative"
@@ -34,7 +34,7 @@ const Landing = () => {
             />
           </Link>
         ) : (
-          <Link to="/register">
+          <Link to="/volatility">
             <Image
               style={{
                 position: "relative"

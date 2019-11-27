@@ -10,6 +10,10 @@ export default class TradeNav extends Component {
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
+  handleSignOut = () => {
+    localStorage.removeItem("token");
+    this.props.history.push("/goodbye");
+  };
   render() {
     const { activeItem } = this.state;
 
