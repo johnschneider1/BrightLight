@@ -36,6 +36,7 @@ const Volatility = () => {
   const nummy = 112;
 
   const data = {
+    /*
     labels: [
       `${rapid}`,
       "January 2003",
@@ -64,6 +65,8 @@ const Volatility = () => {
       `${rapid}`,
       `${rapid}`
     ],
+    */
+    labels: Object.keys(vol),
     datasets: [
       {
         label: "Price over Time",
@@ -84,7 +87,8 @@ const Volatility = () => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: [55, 59, 80, 81, 56, 55, 40, `${nummy}`]
+        //data: [55, 59, 80, 81, 56, 55, 40, `${nummy}`]
+        data: Object.values(vol).map(i => i.SMA)
       }
     ]
   };
@@ -163,6 +167,8 @@ const Volatility = () => {
         console.error(error);
       });
   }, [stock]);
+
+  console.log("vollllllll", vol);
 
   const handleSubmit = e => {
     e.preventDefault();
