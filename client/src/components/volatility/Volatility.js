@@ -8,6 +8,8 @@ import Navbar from "../navbar/navbar";
 import Vol from "./vol";
 import "./volatility.css";
 import Nivo from "../charts/Nivo";
+import BarChart from "../charts/Bar";
+import MyPie from "../charts/MyPie";
 
 const Volatility = () => {
   // form state
@@ -75,7 +77,23 @@ const Volatility = () => {
   // }
 
   const newAxis = Object.keys(vol);
+  // const newAxis = vol.map(el => Object.keys(el));
   const otherAxis = Object.values(vol).map(ele => ele.SMA);
+
+  const barData = {
+    labels: newAxis,
+    datasets: [
+      {
+        label: "My First dataset",
+        backgroundColor: "rgba(255,99,132,0.2)",
+        borderColor: "rgba(255,99,132,1)",
+        borderWidth: 1,
+        hoverBackgroundColor: "rgba(255,99,132,0.4)",
+        hoverBorderColor: "rgba(255,99,132,1)",
+        data: otherAxis
+      }
+    ]
+  };
 
   const data = {
     // labels: Object.keys(vol),
@@ -165,9 +183,16 @@ const Volatility = () => {
         ` https://www.alphavantage.co/query?function=SMA&symbol=${stock}&interval=weekly&time_period=10&series_type=open&apikey=LKWC7HB4USLTPXIL`
       )
       .then(res => {
-        console.log("chart data:", res.data);
-        setVol(res.data["Technical Analysis: SMA"]);
-        console.log("statesetTest:", res.data["Technical Analysis: SMA"]);
+        if (res.data) {
+          console.log("truthytest", res.data["Technical Analysis: SMA"]);
+          if (res.data["Technical Analysis: SMA"] === undefined) {
+            res.data["Technical Analysis: SMA"] = "cme";
+          }
+          setVol(res.data["Technical Analysis: SMA"]);
+        }
+        // console.log("chart data:", res.data);
+        // setVol(res.data["Technical Analysis: SMA"]);
+        // console.log("statesetTest:", res.data["Technical Analysis: SMA"]);
         // const dataField = res.data;
         // dataField.map(data => {
         //   console.log("mapTest:", data);
@@ -259,6 +284,15 @@ const Volatility = () => {
       </div> */}
       <div id="root">
         <Nivo pinkUnicorn={data} stock={stock} />
+
+        {/* <h2>
+          I can render you data in almost any for you like, here are a few
+          examples
+        </h2> */}
+
+        <BarChart pinkUnicorn={barData} />
+
+        <MyPie />
 
         {/* <StockChart tableData={vol} /> */}
       </div>
