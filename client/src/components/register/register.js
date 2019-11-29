@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./register.css";
 import { Button } from "semantic-ui-react";
+import { NavLink } from "react-router-dom";
 
 const initialinfo = {
   username: "",
@@ -72,6 +73,10 @@ const Register = props => {
               required
             />
           </div>
+          <NavLink to="/login">
+            <p className="signupNav">Already have an accout? Login!</p>
+          </NavLink>
+
           {/* <input
           type="submit"
           value="Login"

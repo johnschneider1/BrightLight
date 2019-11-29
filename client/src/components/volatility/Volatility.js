@@ -216,7 +216,7 @@ const Volatility = () => {
     <div className="vol-container2" onSubmit={handleSubmit}>
       <Navbar />
       <Header as="h1" textAlign="center" color="yellow">
-        Eqyity Index Search
+        Equity Index Search
       </Header>
       <form className="vol-form">
         {/* <input
