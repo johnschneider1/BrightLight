@@ -60,7 +60,15 @@ h1.regbox {
   color: yellow;
   font-family: "Roboto", sans-serif;
 }
+/* 
+.benSolt {
+  border: 2px solid red;
+  display: flex;
+  justify-content: center;
+} */
 
-/* .benSolt {
-    border: 2px solid red;
-  } */
+.signupNav {
+  color: white;
+  /* border: solid red;
+  align-self: center; */
+}

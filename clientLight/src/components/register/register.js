@@ -21,6 +21,7 @@ const Register = props => {
       .post("https://quietlight-db.herokuapp.com/api/auth/register", info)
       .then(res => {
         console.log(res);
+
         setinfo(initialinfo);
         localStorage.setItem("token", res.data.token);
         props.history.push("/login");
@@ -87,8 +88,8 @@ const Register = props => {
           <Button onClick={handleSubmit} inverted size="large" color="yellow">
             Register
           </Button>
-          {/* 
-          {initialinfo !== null ? (
+
+          {/* {initialinfo !== null ? (
             <div>that didn't work try again </div>
           ) : (
             <div>success</div>
