@@ -11,35 +11,14 @@ import Nivo from "../charts/Nivo";
 import BarChart from "../charts/Bar";
 import MyPie from "../charts/MyPie";
 
-// function for setting hover functionality
-// function useHover() {
-//   const ref = useRef();
-//   const [hovered, setHovered] = useState(false);
-
-//   const enter = () => setHovered(true);
-//   const leave = () => setHovered(false);
-
-//   useEffect(() => {
-//     ref.current.addEventListener("mouseenter", enter);
-//     ref.current.addEventListener("mouseenter", leave);
-//     return () => {
-//       ref.current.removeaddEventListener("mouseenter", enter);
-//       ref.current.removeaddEventListener("mouseenter", leave);
-//     };
-//   }, [ref]);
-
-//   return [ref, hovered];
-// }
-
 const Volatility = () => {
   // form state
   const [vol, setVol] = useState([]);
   const [stock, setStock] = useState("cme");
   const [crypto, setCrypto] = useState([]);
   const [chartdata, setChartData] = useState();
-
-  // custom hook for hover state
-  // const [ref, hovered] = useHover();
+  const [isShown, setIsShown] = useState(false);
+  const [newText, setNewText] = useState("This is the new text");
 
   console.log("volatility test:", vol);
   if (crypto === undefined) {
@@ -47,61 +26,9 @@ const Volatility = () => {
   }
   console.log("test crypto:", crypto);
 
-  // if (typeof Object.keys(vol) !== "undefined" && Object.keys(vol).length > 0) {
-  //   setVol("");
-  // }
-  // const blankSpace = {
-  //   labels: [
-  //     "January 2003",
-  //     "July 2003",
-  //     "March",
-  //     "April",
-  //     "May",
-  //     "June",
-  //     "July"
-  //   ]
-  // };
-
-  // if (vol === undefined || null) {
-  //   let newAxis = {
-  //     labels: [
-  //       "January 2003",
-  //       "July 2003",
-  //       "March",
-  //       "April",
-  //       "May",
-  //       "June",
-  //       "July"
-  //     ],
-  //     datasets: [
-  //       {
-  //         label: "Price over Time",
-  //         fill: false,
-  //         lineTension: 0.1,
-  //         backgroundColor: "rgba(75,192,192,0.4)",
-  //         borderColor: "rgba(75,192,192,1)",
-  //         borderCapStyle: "butt",
-  //         borderDash: [],
-  //         borderDashOffset: 0.0,
-  //         borderJoinStyle: "miter",
-  //         pointBorderColor: "rgba(75,192,192,1)",
-  //         pointBackgroundColor: "#fff",
-  //         pointBorderWidth: 1,
-  //         pointHoverRadius: 5,
-  //         pointHoverBackgroundColor: "rgba(75,192,192,1)",
-  //         pointHoverBorderColor: "rgba(220,220,220,1)",
-  //         pointHoverBorderWidth: 2,
-  //         pointRadius: 1,
-  //         pointHitRadius: 10,
-  //         data: [55, 59, 80, 81, 56, 55, 40]
-  //       }
-  //     ]
-  //   };
-  // }
-
   const newAxis = Object.keys(vol);
   // const newAxis = vol.map(el => Object.keys(el));
-  const otherAxis = Object.values(vol).map(ele => ele.SMA);
+  const otherAxis = Object.values(vol).map((ele) => ele.SMA);
 
   const barData = {
     labels: newAxis,
@@ -113,17 +40,16 @@ const Volatility = () => {
         borderWidth: 1,
         hoverBackgroundColor: "rgba(255,99,132,0.4)",
         hoverBorderColor: "rgba(255,99,132,1)",
-        data: otherAxis
-      }
-    ]
+        data: otherAxis,
+      },
+    ],
   };
 
   const data = {
-    // labels: Object.keys(vol),
     labels: newAxis,
     datasets: [
       {
-        label: "Price over Time",
+        label: "Stock",
         fill: false,
         lineTension: 0.1,
         backgroundColor: "rgba(75,192,192,0.4)",
@@ -142,48 +68,17 @@ const Volatility = () => {
         pointRadius: 1,
         pointHitRadius: 10,
         // data: Object.values(vol).map(ele => ele.SMA)
-        data: otherAxis
-      }
-    ]
+        data: otherAxis,
+      },
+    ],
   };
-
-  // const chartJsData = function() {
-  //   return {
-  //     data: {
-  //       labels: [`${vol}`],
-  //       datasets: [
-  //         {
-  //           label: "Price over Time",
-  //           fill: false,
-  //           lineTension: 0.1,
-  //           backgroundColor: "rgba(75,192,192,0.4)",
-  //           borderColor: "rgba(75,192,192,1)",
-  //           borderCapStyle: "butt",
-  //           borderDash: [],
-  //           borderDashOffset: 0.0,
-  //           borderJoinStyle: "miter",
-  //           pointBorderColor: "rgba(75,192,192,1)",
-  //           pointBackgroundColor: "#fff",
-  //           pointBorderWidth: 1,
-  //           pointHoverRadius: 5,
-  //           pointHoverBackgroundColor: "rgba(75,192,192,1)",
-  //           pointHoverBorderColor: "rgba(220,220,220,1)",
-  //           pointHoverBorderWidth: 2,
-  //           pointRadius: 1,
-  //           pointHitRadius: 10,
-  //           data: [`${vol["SMA"]}`]
-  //         }
-  //       ]
-  //     }
-  //   };
-  // };
 
   useEffect(() => {
     axios
       .get(
         `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stock}&apikey=LKWC7HB4USLTPXIL`
       )
-      .then(res => {
+      .then((res) => {
         if (res.data) {
           // console.log("API fullData;", res.data);
           console.log("Api data:", res.data["Global Quote"]);
@@ -193,7 +88,7 @@ const Volatility = () => {
           setCrypto(res.data["Global Quote"]);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }, [stock]);
@@ -205,7 +100,7 @@ const Volatility = () => {
       .get(
         ` https://www.alphavantage.co/query?function=SMA&symbol=${stock}&interval=weekly&time_period=10&series_type=open&apikey=LKWC7HB4USLTPXIL`
       )
-      .then(res => {
+      .then((res) => {
         if (res.data) {
           console.log("truthytest", res.data["Technical Analysis: SMA"]);
           if (res.data["Technical Analysis: SMA"] === undefined) {
@@ -224,16 +119,82 @@ const Volatility = () => {
 
         // was WMA in array brackets
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }, [stock]);
 
+  const handleClickema = () => {
+    axios
+
+      .get(
+        ` https://www.alphavantage.co/query?function=EMA&symbol=${stock}&interval=weekly&time_period=10&series_type=open&apikey=LKWC7HB4USLTPXIL`
+      )
+      .then((res) => {
+        if (res.data) {
+          console.log("EMA TEST:", res.data["Technical Analysis: EMA"]);
+          if (res.data["Technical Analysis: EMA"] === undefined) {
+            res.data["Technical Analysis: EMA"] = "cme";
+          }
+          // setVol(res.data["Technical Analysis: EMA"]);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleClickvwap = () => {
+    //www.alphavantage.co/query?function=VWAP&symbol=IBM&interval=15min&apikey=demo
+
+    https: axios
+
+      .get(
+        ` https://www.alphavantage.co/query?function=VWAP&symbol=${stock}&interval=15min&apikey=LKWC7HB4USLTPXIL`
+      )
+      .then((res) => {
+        if (res.data) {
+          console.log("VWAP TEST:", res.data["Technical Analysis: VWAP"]);
+          if (res.data["Technical Analysis: VWAP"] === undefined) {
+            res.data["Technical Analysis: VWAP"] = "cme";
+          }
+          // setVol(res.data["Technical Analysis: EMA"]);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleClickvwma = () => {
+    //www.alphavantage.co/query?function=VWAP&symbol=IBM&interval=15min&apikey=demo
+
+    https: axios
+
+      .get(
+        ` https://www.alphavantage.co/query?function=WMA&symbol=${stock}&interval=weekly&time_period=10&series_type=open&apikey=LKWC7HB4USLTPXIL`
+      )
+      .then((res) => {
+        if (res.data) {
+          console.log("WMA TEST:", res.data["Technical Analysis: WMA"]);
+          if (res.data["Technical Analysis: WMA"] === undefined) {
+            res.data["Technical Analysis: WMA"] = "cme";
+          }
+          // setVol(res.data["Technical Analysis: EMA"]);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   console.log("vollllllll", vol);
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+  const replace = (e) => {};
 
   return (
     <div className="vol-container2" onSubmit={handleSubmit}>
@@ -246,7 +207,7 @@ const Volatility = () => {
           placeholder="product code"
           name="product"
           value={stock.product}
-          onChange={e => setStock(e.target.value)}
+          onChange={(e) => setStock(e.target.value)}
         /> */}
         <Input
           textAlign="center"
@@ -255,7 +216,7 @@ const Volatility = () => {
           placeholder="Search..."
           name="product"
           value={stock}
-          onChange={e => setStock(e.target.value)}
+          onChange={(e) => setStock(e.target.value)}
         />
       </form>
       {/* <Button circular icon="chart line" color="yellow" /> */}
@@ -306,7 +267,13 @@ const Volatility = () => {
         <StockChart />
       </div> */}
       <div id="root">
-        <Nivo pinkUnicorn={data} stock={stock} />
+        <h1>Other data available for: {stock.toUpperCase()}</h1>
+        <button>{stock.toUpperCase()} last ten opens</button>
+        <button>{stock.toUpperCase()} last ten highs</button>
+        <button onClick={handleClickvwma}>{stock.toUpperCase()} WMA</button>
+        <button onClick={handleClickema}>{stock.toUpperCase()} EMA</button>
+        <button onClick={handleClickvwap}>{stock.toUpperCase()} VWAP</button>
+        <Nivo pinkUnicorn={data} stock={stock.toUpperCase()} />
 
         {/* <h2>
           I can render you data in almost any for you like, here are a few
@@ -314,10 +281,6 @@ const Volatility = () => {
         </h2> */}
 
         <BarChart pinkUnicorn={barData} />
-
-        {/* <MyPie /> */}
-
-        {/* <StockChart tableData={vol} /> */}
       </div>
     </div>
   );

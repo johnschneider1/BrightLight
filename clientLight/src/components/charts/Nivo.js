@@ -51,7 +51,7 @@ export default class ChartsJs extends React.Component {
     displayTitle: true,
     displayLegend: true,
     legendPosition: "top",
-    stock: "cme"
+    stock: "cme",
   };
 
   render() {
@@ -64,13 +64,13 @@ export default class ChartsJs extends React.Component {
             title: {
               display: this.props.displayTitle,
               text: "Line Graph For " + this.props.stock,
-              fontSize: 25
+              fontSize: 25,
               //   responsive: true
             },
             legend: {
               display: this.props.displayLegend,
-              position: this.props.legendPosition
-            }
+              position: this.props.legendPosition,
+            },
           }}
         />
       </div>
