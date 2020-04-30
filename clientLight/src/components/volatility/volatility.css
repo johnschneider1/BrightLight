@@ -12,6 +12,10 @@
   width: 100% !important;
 }
 
-h2 {
+/* h2 {
   align-self: center;
+} */
+
+.addcharts {
+  border: red 10px;
 }

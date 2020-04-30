@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { axiosWithAuth } from "../../utils/axiosWithAuth";
-import { Header, Table, Button, Icon, Input } from "semantic-ui-react";
+import { Header, Table, Button, Icon, Input, Popup } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import StockChart from "../charts/stockChart";
 import Navbar from "../navbar/navbar";
@@ -10,6 +10,8 @@ import "./volatility.css";
 import Nivo from "../charts/Nivo";
 import BarChart from "../charts/Bar";
 import MyPie from "../charts/MyPie";
+import Ema from "../charts/ema";
+import Vwap from "../charts/vwap";
 
 const Volatility = () => {
   // form state
@@ -19,6 +21,10 @@ const Volatility = () => {
   const [chartdata, setChartData] = useState();
   const [isShown, setIsShown] = useState(false);
   const [newText, setNewText] = useState("This is the new text");
+  const [newema, setNewema] = useState([]);
+  const [newvwap, setNewvwap] = useState([]);
+
+  const toggleTrueFalse = () => setIsShown(!isShown);
 
   console.log("volatility test:", vol);
   if (crypto === undefined) {
@@ -26,8 +32,8 @@ const Volatility = () => {
   }
   console.log("test crypto:", crypto);
 
+  // Logic for nivo graph axis
   const newAxis = Object.keys(vol);
-  // const newAxis = vol.map(el => Object.keys(el));
   const otherAxis = Object.values(vol).map((ele) => ele.SMA);
 
   const barData = {
@@ -72,6 +78,69 @@ const Volatility = () => {
       },
     ],
   };
+  // EMA Logic for axis
+  const newAxisema = Object.keys(newema);
+  const otherAxisema = Object.values(newema).map((ele) => ele.EMA);
+
+  const EmaData = {
+    labels: newAxisema,
+    datasets: [
+      {
+        label: "Stock",
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: "rgba(75,192,192,0.4)",
+        borderColor: "rgba(75,192,192,1)",
+        borderCapStyle: "butt",
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: "miter",
+        pointBorderColor: "rgba(75,192,192,1)",
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgba(75,192,192,1)",
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        // data: Object.values(vol).map(ele => ele.SMA)
+        data: otherAxisema,
+      },
+    ],
+  };
+
+  // vwap Logic for axis
+  const newAxisvwap = Object.keys(newvwap);
+  const otherAxisvwap = Object.values(newvwap).map((ele) => ele.EMA);
+
+  const VwapData = {
+    labels: newAxisema,
+    datasets: [
+      {
+        label: "Stock",
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: "rgba(75,192,192,0.4)",
+        borderColor: "rgba(75,192,192,1)",
+        borderCapStyle: "butt",
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: "miter",
+        pointBorderColor: "rgba(75,192,192,1)",
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgba(75,192,192,1)",
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        // data: Object.values(vol).map(ele => ele.SMA)
+        data: otherAxisema,
+      },
+    ],
+  };
 
   useEffect(() => {
     axios
@@ -102,7 +171,8 @@ const Volatility = () => {
       )
       .then((res) => {
         if (res.data) {
-          console.log("truthytest", res.data["Technical Analysis: SMA"]);
+          console.log("SMARAW:", res.data);
+          console.log("truthytestSMA", res.data["Technical Analysis: SMA"]);
           if (res.data["Technical Analysis: SMA"] === undefined) {
             res.data["Technical Analysis: SMA"] = "cme";
           }
@@ -132,11 +202,10 @@ const Volatility = () => {
       )
       .then((res) => {
         if (res.data) {
+          console.log("PUREEMA:", res.data);
           console.log("EMA TEST:", res.data["Technical Analysis: EMA"]);
-          if (res.data["Technical Analysis: EMA"] === undefined) {
-            res.data["Technical Analysis: EMA"] = "cme";
-          }
-          // setVol(res.data["Technical Analysis: EMA"]);
+
+          setNewema(res.data["Technical Analysis: EMA"]);
         }
       })
       .catch((error) => {
@@ -155,10 +224,8 @@ const Volatility = () => {
       .then((res) => {
         if (res.data) {
           console.log("VWAP TEST:", res.data["Technical Analysis: VWAP"]);
-          if (res.data["Technical Analysis: VWAP"] === undefined) {
-            res.data["Technical Analysis: VWAP"] = "cme";
-          }
-          // setVol(res.data["Technical Analysis: EMA"]);
+
+          setNewvwap(res.data["Technical Analysis: VWAP"]);
         }
       })
       .catch((error) => {
@@ -187,6 +254,30 @@ const Volatility = () => {
         console.error(error);
       });
   };
+
+  const handleClickbbands = () => {
+    //www.alphavantage.co/query?function=VWAP&symbol=IBM&interval=15min&apikey=demo
+
+    https: axios
+
+      .get(
+        ` https://www.alphavantage.co/query?function=BBANDS&symbol=${stock}&interval=weekly&time_period=5&series_type=close&nbdevup=3&nbdevdn=3&apikey=LKWC7HB4USLTPXIL`
+      )
+      .then((res) => {
+        if (res.data) {
+          console.log("BBANDS TEST:", res.data["Technical Analysis: BBANDS"]);
+          if (res.data["Technical Analysis: BBANDS"] === undefined) {
+            res.data["Technical Analysis: BBANDS"] = "cme";
+          }
+          // setVol(res.data["Technical Analysis: EMA"]);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  // https://www.alphavantage.co/query?function=BBANDS&symbol=IBM&interval=weekly&time_period=5&series_type=close&nbdevup=3&nbdevdn=3&apikey=demo
 
   console.log("vollllllll", vol);
 
@@ -267,20 +358,58 @@ const Volatility = () => {
         <StockChart />
       </div> */}
       <div id="root">
-        <h1>Other data available for: {stock.toUpperCase()}</h1>
-        <button>{stock.toUpperCase()} last ten opens</button>
-        <button>{stock.toUpperCase()} last ten highs</button>
-        <button onClick={handleClickvwma}>{stock.toUpperCase()} WMA</button>
-        <button onClick={handleClickema}>{stock.toUpperCase()} EMA</button>
-        <button onClick={handleClickvwap}>{stock.toUpperCase()} VWAP</button>
+        <div className="addcharts">
+          <h1>Other data available for: {stock.toUpperCase()}</h1>
+          <Button inverted color="yellow">
+            {stock.toUpperCase()} last ten opens
+          </Button>
+          <Button inverted color="yellow" onClick={handleClickbbands}>
+            {stock.toUpperCase()} BBANDS
+          </Button>
+          <Button inverted color="yellow" onClick={handleClickvwma}>
+            {stock.toUpperCase()} WMA
+          </Button>
+          <Button
+            inverted
+            color="yellow"
+            onClick={() => {
+              handleClickema();
+              toggleTrueFalse();
+            }}
+          >
+            {stock.toUpperCase()} EMA
+          </Button>
+          <Button
+            inverted
+            color="yellow"
+            onClick={() => {
+              handleClickvwap();
+              toggleTrueFalse();
+            }}
+          >
+            {stock.toUpperCase()} VWAP
+          </Button>
+          <Popup
+            content="Add VWAP to the Page Below"
+            trigger={<Button icon="add" />}
+          />
+        </div>
         <Nivo pinkUnicorn={data} stock={stock.toUpperCase()} />
+
+        {isShown ? (
+          <Ema pinkUnicorn={EmaData} stock={stock.toUpperCase()} />
+        ) : null}
+
+        {isShown ? (
+          <Vwap pinkUnicorn={VwapData} stock={stock.toUpperCase()} />
+        ) : null}
 
         {/* <h2>
           I can render you data in almost any for you like, here are a few
           examples
         </h2> */}
 
-        <BarChart pinkUnicorn={barData} />
+        {/* <BarChart pinkUnicorn={barData} /> */}
       </div>
     </div>
   );
