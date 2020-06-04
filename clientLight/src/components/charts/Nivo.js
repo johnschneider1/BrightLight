@@ -48,8 +48,8 @@ export default class ChartsJs extends React.Component {
   }
 
   static defaultProps = {
-    displayTitle: true,
-    displayLegend: true,
+    displayTitle: false,
+    displayLegend: false,
     legendPosition: "top",
     stock: "cme",
   };

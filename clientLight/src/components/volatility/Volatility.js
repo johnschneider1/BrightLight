@@ -12,6 +12,7 @@ import BarChart from "../charts/Bar";
 import MyPie from "../charts/MyPie";
 import Ema from "../charts/ema";
 import Vwap from "../charts/vwap";
+import Wma from "../charts/wma";
 
 const Volatility = () => {
   // form state
@@ -23,6 +24,8 @@ const Volatility = () => {
   const [newText, setNewText] = useState("This is the new text");
   const [newema, setNewema] = useState([]);
   const [newvwap, setNewvwap] = useState([]);
+  const [newbbands, setBbands] = useState([]);
+  const [newwma, setNewwma] = useState([]);
 
   const toggleTrueFalse = () => setIsShown(!isShown);
 
@@ -36,29 +39,15 @@ const Volatility = () => {
   const newAxis = Object.keys(vol);
   const otherAxis = Object.values(vol).map((ele) => ele.SMA);
 
-  const barData = {
-    labels: newAxis,
-    datasets: [
-      {
-        label: "My First dataset",
-        backgroundColor: "rgba(255,99,132,0.2)",
-        borderColor: "rgba(255,99,132,1)",
-        borderWidth: 1,
-        hoverBackgroundColor: "rgba(255,99,132,0.4)",
-        hoverBorderColor: "rgba(255,99,132,1)",
-        data: otherAxis,
-      },
-    ],
-  };
-
   const data = {
     labels: newAxis,
     datasets: [
       {
-        label: "Stock",
-        fill: false,
+        label: "Price",
+        fill: true,
         lineTension: 0.1,
-        backgroundColor: "rgba(75,192,192,0.4)",
+        // backgroundColor: "rgba(75,192,192,0.4)",
+        backgroundColor: "rgba(234,255,3,0.6)",
         borderColor: "rgba(75,192,192,1)",
         borderCapStyle: "butt",
         borderDash: [],
@@ -86,8 +75,8 @@ const Volatility = () => {
     labels: newAxisema,
     datasets: [
       {
-        label: "Stock",
-        fill: false,
+        label: "Price",
+        fill: true,
         lineTension: 0.1,
         backgroundColor: "rgba(75,192,192,0.4)",
         borderColor: "rgba(75,192,192,1)",
@@ -112,14 +101,14 @@ const Volatility = () => {
 
   // vwap Logic for axis
   const newAxisvwap = Object.keys(newvwap);
-  const otherAxisvwap = Object.values(newvwap).map((ele) => ele.EMA);
+  const otherAxisvwap = Object.values(newvwap).map((ele) => ele.VWAP);
 
   const VwapData = {
-    labels: newAxisema,
+    labels: newAxisvwap,
     datasets: [
       {
-        label: "Stock",
-        fill: false,
+        label: "Price",
+        fill: true,
         lineTension: 0.1,
         backgroundColor: "rgba(75,192,192,0.4)",
         borderColor: "rgba(75,192,192,1)",
@@ -137,7 +126,39 @@ const Volatility = () => {
         pointRadius: 1,
         pointHitRadius: 10,
         // data: Object.values(vol).map(ele => ele.SMA)
-        data: otherAxisema,
+        data: otherAxisvwap,
+      },
+    ],
+  };
+
+  // wma Logic for axis
+  const newAxiswma = Object.keys(newwma);
+  const otherAxiswma = Object.values(newwma).map((ele) => ele.WMA);
+
+  const wmaData = {
+    labels: newAxiswma,
+    datasets: [
+      {
+        label: "Price",
+        fill: true,
+        lineTension: 0.1,
+        backgroundColor: "rgba(75,192,192,0.4)",
+        borderColor: "rgba(75,192,192,1)",
+        borderCapStyle: "butt",
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: "miter",
+        pointBorderColor: "rgba(75,192,192,1)",
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgba(75,192,192,1)",
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        // data: Object.values(vol).map(ele => ele.SMA)
+        data: otherAxiswma,
       },
     ],
   };
@@ -247,7 +268,7 @@ const Volatility = () => {
           if (res.data["Technical Analysis: WMA"] === undefined) {
             res.data["Technical Analysis: WMA"] = "cme";
           }
-          // setVol(res.data["Technical Analysis: EMA"]);
+          setNewwma(res.data["Technical Analysis: WMA"]);
         }
       })
       .catch((error) => {
@@ -269,7 +290,7 @@ const Volatility = () => {
           if (res.data["Technical Analysis: BBANDS"] === undefined) {
             res.data["Technical Analysis: BBANDS"] = "cme";
           }
-          // setVol(res.data["Technical Analysis: EMA"]);
+          setBbands(res.data["Technical Analysis: VWAP"]);
         }
       })
       .catch((error) => {
@@ -359,14 +380,21 @@ const Volatility = () => {
       </div> */}
       <div id="root">
         <div className="addcharts">
-          <h1>Other data available for: {stock.toUpperCase()}</h1>
-          <Button inverted color="yellow">
+          <h1>Other Charts available for: {stock.toUpperCase()}</h1>
+          {/* <Button inverted color="yellow">
             {stock.toUpperCase()} last ten opens
-          </Button>
-          <Button inverted color="yellow" onClick={handleClickbbands}>
+          </Button> */}
+          {/* <Button inverted color="yellow" onClick={handleClickbbands}>
             {stock.toUpperCase()} BBANDS
-          </Button>
-          <Button inverted color="yellow" onClick={handleClickvwma}>
+          </Button> */}
+          <Button
+            inverted
+            color="yellow"
+            onClick={() => {
+              handleClickvwma();
+              toggleTrueFalse();
+            }}
+          >
             {stock.toUpperCase()} WMA
           </Button>
           <Button
@@ -389,10 +417,10 @@ const Volatility = () => {
           >
             {stock.toUpperCase()} VWAP
           </Button>
-          <Popup
+          {/* <Popup
             content="Add VWAP to the Page Below"
             trigger={<Button icon="add" />}
-          />
+          /> */}
         </div>
         <Nivo pinkUnicorn={data} stock={stock.toUpperCase()} />
 
@@ -402,6 +430,10 @@ const Volatility = () => {
 
         {isShown ? (
           <Vwap pinkUnicorn={VwapData} stock={stock.toUpperCase()} />
+        ) : null}
+
+        {isShown ? (
+          <Wma pinkUnicorn={wmaData} stock={stock.toUpperCase()} />
         ) : null}
 
         {/* <h2>
@@ -416,5 +448,3 @@ const Volatility = () => {
 };
 
 export default Volatility;
-
-// displayTitle={crypto} stock={crypto}

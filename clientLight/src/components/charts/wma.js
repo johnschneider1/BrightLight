@@ -4,7 +4,7 @@ import { Line } from "react-chartjs-2";
 export default class ChartsJs extends React.Component {
   constructor(props) {
     super(props);
-    console.log("test props vwap:", props.pinkUnicorn);
+    console.log("test props wma:", props.pinkUnicorn);
     this.state = {};
   }
 
@@ -12,13 +12,13 @@ export default class ChartsJs extends React.Component {
     displayTitle: false,
     displayLegend: false,
     legendPosition: "top",
-    stock: "",
+    stock: "cme",
   };
 
   render() {
     return (
       <div>
-        <h2>Volume Weighted Average Price</h2>
+        <h2>Weighted Moving Average</h2>
         <Line
           data={this.props.pinkUnicorn}
           options={{

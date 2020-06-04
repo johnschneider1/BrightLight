@@ -4,21 +4,21 @@ import { Line } from "react-chartjs-2";
 export default class ChartsJs extends React.Component {
   constructor(props) {
     super(props);
-    console.log("test props vwap:", props.pinkUnicorn);
+    console.log("test props:", props.pinkUnicorn);
     this.state = {};
   }
 
   static defaultProps = {
-    displayTitle: false,
-    displayLegend: false,
+    displayTitle: true,
+    displayLegend: true,
     legendPosition: "top",
-    stock: "",
+    stock: "cme",
   };
 
   render() {
     return (
       <div>
-        <h2>Volume Weighted Average Price</h2>
+        <h2>VWAP</h2>
         <Line
           data={this.props.pinkUnicorn}
           options={{
